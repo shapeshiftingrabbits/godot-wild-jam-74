@@ -6,6 +6,13 @@
 
 ## GitHub Action Workflows
 
+### How to use
+
+- When using this template, you need to set the variables and secrets used by the github actions.
+  - Do a global search on the project to find the variables that need to be set.
+  - Go to the settings of your repository and add them.
+  - ![action secret screenshot](./doc/action_secrets_screenshot.png)
+
 ### Intentions and processes
 
 - We want to be able to test builds before merging code changes to `main`
