@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://4675gh2uxltd"]
+
+[ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
+[ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imhj4"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_034on"]
+sky_material = SubResource("ProceduralSkyMaterial_imhj4")
+
+[sub_resource type="Environment" id="Environment_b3wwa"]
+background_mode = 2
+sky = SubResource("Sky_034on")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sgmla"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5e1sp"]
+albedo_texture = ExtResource("1_p8klg")
+uv1_scale = Vector3(100, 100, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l67q"]
+albedo_color = Color(0, 1, 0.0999999, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_v4icb"]
+material = SubResource("StandardMaterial3D_4l67q")
+radius = 0.2
+height = 1.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_elfxu"]
+points = PackedVector3Array(0.190622, 0.340095, 0.0427398, -0.193135, -0.338923, -0.0310244, -0.177289, -0.351479, -0.0747747, -0.16398, 0.383904, -0.0753819, -0.0600953, 0.32193, 0.188647, 0.11673, -0.369802, 0.146319, 0.0859448, -0.335648, -0.176689, 0.0278977, 0.339474, -0.193446, -0.147558, -0.335783, 0.129782, 0.188647, -0.32193, -0.0600953, 0.0288523, -0.487654, -0.0625052, -0.0891595, -0.321166, -0.176769, -0.191178, 0.30631, 0.0567225, 0.028905, 0.488499, 0.0594362, 0.144493, 0.336035, -0.133056, 0.099397, 0.317427, 0.171555, -0.0457956, -0.339183, 0.190107, -0.116906, 0.317159, -0.160164, -0.0618573, -0.467355, 0.0888369, 0.186824, -0.289876, 0.0708561, 0.0586138, 0.46682, -0.0919081, -0.122093, 0.451968, 0.0435783, 0.119466, -0.454024, 0.0437837, 0.057189, -0.323406, 0.18952, -0.0470766, 0.47042, -0.0926045, -0.190797, 0.291104, -0.0597801, -0.0766135, -0.450316, -0.106639, -0.147558, 0.335785, 0.129783, 0.190107, 0.339183, -0.0457956, -0.0310246, -0.338926, -0.193136, 0.159071, 0.335966, 0.115245, 0.0427392, 0.34009, 0.19062)
+
+[node name="MovementPrototype" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_b3wwa")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_sgmla")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D/CollisionShape3D"]
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_5e1sp")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+script = ExtResource("2_tm0ii")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.955299, 0.295641, 0, -0.295641, 0.955299, 0, 2.26907, 5.80149)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_v4icb")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("ConvexPolygonShape3D_elfxu")
