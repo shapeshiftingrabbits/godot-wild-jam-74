@@ -36,7 +36,7 @@ height = 1.0
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_elfxu"]
 points = PackedVector3Array(0.190622, 0.340095, 0.0427398, -0.193135, -0.338923, -0.0310244, -0.177289, -0.351479, -0.0747747, -0.16398, 0.383904, -0.0753819, -0.0600953, 0.32193, 0.188647, 0.11673, -0.369802, 0.146319, 0.0859448, -0.335648, -0.176689, 0.0278977, 0.339474, -0.193446, -0.147558, -0.335783, 0.129782, 0.188647, -0.32193, -0.0600953, 0.0288523, -0.487654, -0.0625052, -0.0891595, -0.321166, -0.176769, -0.191178, 0.30631, 0.0567225, 0.028905, 0.488499, 0.0594362, 0.144493, 0.336035, -0.133056, 0.099397, 0.317427, 0.171555, -0.0457956, -0.339183, 0.190107, -0.116906, 0.317159, -0.160164, -0.0618573, -0.467355, 0.0888369, 0.186824, -0.289876, 0.0708561, 0.0586138, 0.46682, -0.0919081, -0.122093, 0.451968, 0.0435783, 0.119466, -0.454024, 0.0437837, 0.057189, -0.323406, 0.18952, -0.0470766, 0.47042, -0.0926045, -0.190797, 0.291104, -0.0597801, -0.0766135, -0.450316, -0.106639, -0.147558, 0.335785, 0.129783, 0.190107, 0.339183, -0.0457956, -0.0310246, -0.338926, -0.193136, 0.159071, 0.335966, 0.115245, 0.0427392, 0.34009, 0.19062)
 
-[node name="MovementPrototype" type="Node3D"]
+[node name="Root" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -54,7 +54,7 @@ shape = SubResource("BoxShape3D_sgmla")
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_5e1sp")
 
-[node name="Controlable" parent="." instance=ExtResource("2_o268x")]
+[node name="Controllable" parent="." instance=ExtResource("2_o268x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13241, 0.941243, -4.01598)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
@@ -72,6 +72,7 @@ skeleton = NodePath("")
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
 [node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+target_position = Vector3(-1, 0, 0)
+collision_mask = 2
 debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
-debug_shape_thickness = 1
 script = ExtResource("4_mnrto")

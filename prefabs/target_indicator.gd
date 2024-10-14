@@ -9,3 +9,7 @@ func _on_targeted_state_state_entered() -> void:
 
 func _on_targeted_state_state_exited() -> void:
 	hide()
+
+
+func _on_idle_state_state_entered() -> void:
+	hide()
