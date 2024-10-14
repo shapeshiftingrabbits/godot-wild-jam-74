@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=17 format=3 uid="uid://cylce3ac7an7f"]
 
+[ext_resource type="Script" path="res://check_mouse_position.gd" id="1_3kdpv"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
 [ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="2_o268x"]
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
@@ -42,7 +43,7 @@ albedo_color = Color(0, 0.0833333, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_sdjof"]
 material = SubResource("StandardMaterial3D_nv7ev")
-size = Vector3(1, 0.2, 0.2)
+size = Vector3(0.2, 0.2, 1)
 
 [node name="Root" type="Node3D"]
 
@@ -55,6 +56,7 @@ environment = SubResource("Environment_b3wwa")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 5
+script = ExtResource("1_3kdpv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_sgmla")
@@ -73,10 +75,6 @@ script = ExtResource("2_tm0ii")
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, -0.939693, 0.34202, 0, 0.34202, 0.939693, -1, 4.10753e-08, -1.49502e-08, 0, 4, 0)
 
-[node name="MouseRayCast3D" type="RayCast3D" parent="CharacterBody3D/Camera3D"]
-collision_mask = 4
-debug_shape_custom_color = Color(0.0204806, 0.471193, 1, 1)
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 mesh = SubResource("CapsuleMesh_v4icb")
 skeleton = NodePath("")
@@ -94,6 +92,12 @@ script = ExtResource("4_mnrto")
 script = ExtResource("5_ynxwe")
 
 [node name="DirectionIndicator" type="MeshInstance3D" parent="CharacterBody3D/Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04892, 0, 0)
 mesh = SubResource("BoxMesh_sdjof")
 skeleton = NodePath("../..")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="MouseRayCast3D" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+collision_mask = 4
