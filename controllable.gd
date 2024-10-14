@@ -5,18 +5,26 @@ class_name Controllable
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-var is_controlling: bool = false
-var is_targetted: bool = false
+var is_movement_active := false
 
-func set_controlling_state(controlling_status):
-	is_controlling = controlling_status
+@onready var state_chart: StateChart = %StateChart
 
 
-func set_targetted_state(targetted_status):
-	is_targetted = targetted_status
+func set_targeted(status: bool):
+	var event_name = "targeted" if status else "untargeted"
+	state_chart.send_event(event_name)
+
+
+func set_haunted(status: bool):
+	var event_name = "haunted" if status else "unhaunted"
+	state_chart.send_event(event_name)
+
 
 
 func _physics_process(delta: float) -> void:
+	
+	if ! is_movement_active :
+		return
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -31,3 +39,11 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	move_and_slide()
+
+
+func _on_haunted_state_state_entered() -> void:
+	is_movement_active = true
+
+
+func _on_haunted_state_state_exited() -> void:
+	is_movement_active = false

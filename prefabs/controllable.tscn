@@ -1,7 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf4xgew11g0y6"]
+[gd_scene load_steps=12 format=3 uid="uid://bf4xgew11g0y6"]
 
 [ext_resource type="Script" path="res://controllable.gd" id="1_7e0kx"]
 [ext_resource type="Script" path="res://prefabs/target_indicator.gd" id="2_nwsl0"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_vpu8p"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_hfp0o"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_nnef5"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_6jmdc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l67q"]
 albedo_color = Color(1, 0, 0.483334, 1)
@@ -38,3 +42,49 @@ script = ExtResource("2_nwsl0")
 [node name="TargetIndicatorMeshInstance" type="MeshInstance3D" parent="TargetIndicator"]
 mesh = SubResource("BoxMesh_6wpqv")
 skeleton = NodePath("../..")
+
+[node name="StateChart" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_vpu8p")
+
+[node name="CompoundState" type="Node" parent="StateChart"]
+script = ExtResource("4_hfp0o")
+initial_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_nnef5")
+
+[node name="ToTargeted" type="Node" parent="StateChart/CompoundState/IdleState"]
+script = ExtResource("6_6jmdc")
+to = NodePath("../../TargetedState")
+event = &"targeted"
+delay_in_seconds = "0.0"
+
+[node name="TargetedState" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_nnef5")
+
+[node name="ToHaunted" type="Node" parent="StateChart/CompoundState/TargetedState"]
+script = ExtResource("6_6jmdc")
+to = NodePath("../../HauntedState")
+event = &"haunt"
+delay_in_seconds = "0.0"
+
+[node name="ToIdle" type="Node" parent="StateChart/CompoundState/TargetedState"]
+script = ExtResource("6_6jmdc")
+to = NodePath("../../IdleState")
+event = &"untargeted"
+delay_in_seconds = "0.0"
+
+[node name="HauntedState" type="Node" parent="StateChart/CompoundState"]
+script = ExtResource("5_nnef5")
+
+[node name="ToIdle2" type="Node" parent="StateChart/CompoundState/HauntedState"]
+script = ExtResource("6_6jmdc")
+to = NodePath("../../IdleState")
+event = &"unhaunted"
+delay_in_seconds = "0.0"
+
+[connection signal="state_entered" from="StateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_entered"]
+[connection signal="state_exited" from="StateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_exited"]
+[connection signal="state_entered" from="StateChart/CompoundState/HauntedState" to="." method="_on_haunted_state_state_entered"]
+[connection signal="state_exited" from="StateChart/CompoundState/HauntedState" to="." method="_on_haunted_state_state_exited"]
