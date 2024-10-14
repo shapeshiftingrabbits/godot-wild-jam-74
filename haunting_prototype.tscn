@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://4675gh2uxltd"]
+[gd_scene load_steps=13 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
+[ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="2_o268x"]
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
+[ext_resource type="Script" path="res://controllable_detection.gd" id="4_mnrto"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imhj4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -52,8 +54,11 @@ shape = SubResource("BoxShape3D_sgmla")
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_5e1sp")
 
+[node name="Controlable" parent="." instance=ExtResource("2_o268x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13241, 0.941243, -4.01598)
+
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
 script = ExtResource("2_tm0ii")
 
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
@@ -65,3 +70,8 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("ConvexPolygonShape3D_elfxu")
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
+debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
+debug_shape_thickness = 1
+script = ExtResource("4_mnrto")
