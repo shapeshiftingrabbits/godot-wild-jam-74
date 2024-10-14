@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=16 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
 [ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="2_o268x"]
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
 [ext_resource type="Script" path="res://controllable_detection.gd" id="4_mnrto"]
+[ext_resource type="Script" path="res://rotate_with_mouse.gd" id="5_ynxwe"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imhj4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -36,6 +37,13 @@ height = 1.0
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_elfxu"]
 points = PackedVector3Array(0.190622, 0.340095, 0.0427398, -0.193135, -0.338923, -0.0310244, -0.177289, -0.351479, -0.0747747, -0.16398, 0.383904, -0.0753819, -0.0600953, 0.32193, 0.188647, 0.11673, -0.369802, 0.146319, 0.0859448, -0.335648, -0.176689, 0.0278977, 0.339474, -0.193446, -0.147558, -0.335783, 0.129782, 0.188647, -0.32193, -0.0600953, 0.0288523, -0.487654, -0.0625052, -0.0891595, -0.321166, -0.176769, -0.191178, 0.30631, 0.0567225, 0.028905, 0.488499, 0.0594362, 0.144493, 0.336035, -0.133056, 0.099397, 0.317427, 0.171555, -0.0457956, -0.339183, 0.190107, -0.116906, 0.317159, -0.160164, -0.0618573, -0.467355, 0.0888369, 0.186824, -0.289876, 0.0708561, 0.0586138, 0.46682, -0.0919081, -0.122093, 0.451968, 0.0435783, 0.119466, -0.454024, 0.0437837, 0.057189, -0.323406, 0.18952, -0.0470766, 0.47042, -0.0926045, -0.190797, 0.291104, -0.0597801, -0.0766135, -0.450316, -0.106639, -0.147558, 0.335785, 0.129783, 0.190107, 0.339183, -0.0457956, -0.0310246, -0.338926, -0.193136, 0.159071, 0.335966, 0.115245, 0.0427392, 0.34009, 0.19062)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv7ev"]
+albedo_color = Color(0, 0.0833333, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sdjof"]
+material = SubResource("StandardMaterial3D_nv7ev")
+size = Vector3(1, 0.2, 0.2)
+
 [node name="Root" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -46,6 +54,7 @@ shadow_enabled = true
 environment = SubResource("Environment_b3wwa")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_sgmla")
@@ -62,7 +71,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
 script = ExtResource("2_tm0ii")
 
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.955299, 0.295641, 0, -0.295641, 0.955299, 0, 2.26907, 5.80149)
+transform = Transform3D(-4.37114e-08, -0.939693, 0.34202, 0, 0.34202, 0.939693, -1, 4.10753e-08, -1.49502e-08, 0, 4, 0)
+
+[node name="MouseRayCast3D" type="RayCast3D" parent="CharacterBody3D/Camera3D"]
+collision_mask = 4
+debug_shape_custom_color = Color(0.0204806, 0.471193, 1, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 mesh = SubResource("CapsuleMesh_v4icb")
@@ -76,3 +89,11 @@ target_position = Vector3(-1, 0, 0)
 collision_mask = 2
 debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
 script = ExtResource("4_mnrto")
+
+[node name="Pivot" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("5_ynxwe")
+
+[node name="DirectionIndicator" type="MeshInstance3D" parent="CharacterBody3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04892, 0, 0)
+mesh = SubResource("BoxMesh_sdjof")
+skeleton = NodePath("../..")
