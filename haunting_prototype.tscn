@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=18 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Script" path="res://check_mouse_position.gd" id="1_3kdpv"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
 [ext_resource type="Script" path="res://controllable_detection.gd" id="4_mnrto"]
 [ext_resource type="Script" path="res://rotate_with_mouse.gd" id="5_ynxwe"]
+[ext_resource type="Script" path="res://control_enemy.gd" id="7_cb0xk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imhj4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -95,6 +96,9 @@ target_position = Vector3(0, 0, -1)
 collision_mask = 2
 debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
 script = ExtResource("4_mnrto")
+
+[node name="ControlEnemy" type="Node" parent="CharacterBody3D"]
+script = ExtResource("7_cb0xk")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 size = Vector3(0.2, 0.2, 0.2)
