@@ -82,18 +82,19 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
-[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D"]
-target_position = Vector3(-1, 0, 0)
-collision_mask = 2
-debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
-script = ExtResource("4_mnrto")
-
 [node name="Pivot" type="Node3D" parent="CharacterBody3D"]
 script = ExtResource("5_ynxwe")
 
 [node name="DirectionIndicator" type="MeshInstance3D" parent="CharacterBody3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.04104)
 mesh = SubResource("BoxMesh_sdjof")
 skeleton = NodePath("../..")
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Pivot"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 2
+debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
+script = ExtResource("4_mnrto")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 size = Vector3(0.2, 0.2, 0.2)
