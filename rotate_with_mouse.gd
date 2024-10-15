@@ -1,6 +1,7 @@
 extends Node3D
 
-@onready var camera_3d: Camera3D = $"../Camera3D"
+@onready var camera_3d: Camera3D = $"../../Camera3D"
+
 @onready var character_body_3d: CharacterBody3D = $".."
 @onready var mouse_ray_cast_3d: RayCast3D = %MouseRayCast3D
 
