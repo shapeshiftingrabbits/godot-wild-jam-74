@@ -6,8 +6,6 @@ class_name Player
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-var is_action_toggle: bool = false
-var is_haunting: bool = false
 
 @onready var state_chart: StateChart = $StateChart
 @onready var direction_indicator: MeshInstance3D = $Pivot/DirectionIndicator
@@ -70,9 +68,9 @@ func _on_haunting_state_state_exited() -> void:
 	csg_sphere_3d.hide()
 
 
-func _on_normal_state_state_processing(delta: float) -> void:
+func _on_normal_state_state_physics_processing(delta: float) -> void:
 	_handle_movement(delta)
 
 
-func _on_targetting_state_state_processing(delta: float) -> void:
+func _on_targetting_state_state_physics_processing(delta: float) -> void:
 	_handle_movement(delta)

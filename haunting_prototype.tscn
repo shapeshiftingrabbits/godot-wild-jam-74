@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=23 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Script" path="res://check_mouse_position.gd" id="1_3kdpv"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
 [ext_resource type="Script" path="res://controllable_detection.gd" id="4_mnrto"]
 [ext_resource type="Script" path="res://rotate_with_mouse.gd" id="5_ynxwe"]
-[ext_resource type="Script" path="res://control_enemy.gd" id="7_cb0xk"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_v3xjy"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="9_xvk8c"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="10_sdl42"]
@@ -80,78 +79,75 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26727, 0.735282, -2.03005)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.0871558, 0.996195, 0, -0.996195, 0.0871558, 0, 5, 0.077)
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
 script = ExtResource("2_tm0ii")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("CapsuleMesh_v4icb")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="CharacterBody3D"]
+[node name="CSGSphere3D" type="CSGSphere3D" parent="Player"]
 material = SubResource("StandardMaterial3D_cqhaw")
 
-[node name="Pivot" type="Node3D" parent="CharacterBody3D"]
+[node name="Pivot" type="Node3D" parent="Player"]
 script = ExtResource("5_ynxwe")
 
-[node name="DirectionIndicator" type="MeshInstance3D" parent="CharacterBody3D/Pivot"]
+[node name="DirectionIndicator" type="MeshInstance3D" parent="Player/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.04104)
 mesh = SubResource("BoxMesh_sdjof")
 skeleton = NodePath("../..")
 
-[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Pivot"]
+[node name="ControllableRayCast3D" type="RayCast3D" parent="Player/Pivot"]
 target_position = Vector3(0, 0, -10)
 collision_mask = 2
 debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
 script = ExtResource("4_mnrto")
 
-[node name="ControlEnemy" type="Node" parent="CharacterBody3D"]
-script = ExtResource("7_cb0xk")
-
-[node name="StateChart" type="Node" parent="CharacterBody3D"]
+[node name="StateChart" type="Node" parent="Player"]
 script = ExtResource("8_v3xjy")
 
-[node name="CompoundState" type="Node" parent="CharacterBody3D/StateChart"]
+[node name="CompoundState" type="Node" parent="Player/StateChart"]
 script = ExtResource("9_xvk8c")
 initial_state = NodePath("NormalState")
 
-[node name="NormalState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
+[node name="NormalState" type="Node" parent="Player/StateChart/CompoundState"]
 script = ExtResource("10_sdl42")
 
-[node name="ToTargetting" type="Node" parent="CharacterBody3D/StateChart/CompoundState/NormalState"]
+[node name="ToTargetting" type="Node" parent="Player/StateChart/CompoundState/NormalState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../TargettingState")
 event = &"action_pressed"
 delay_in_seconds = "0.0"
 
-[node name="HauntingState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
+[node name="HauntingState" type="Node" parent="Player/StateChart/CompoundState"]
 script = ExtResource("10_sdl42")
 
-[node name="ToNormal" type="Node" parent="CharacterBody3D/StateChart/CompoundState/HauntingState"]
+[node name="ToNormal" type="Node" parent="Player/StateChart/CompoundState/HauntingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../NormalState")
 event = &"cancel"
 delay_in_seconds = "0.0"
 
-[node name="TargettingState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
+[node name="TargettingState" type="Node" parent="Player/StateChart/CompoundState"]
 script = ExtResource("10_sdl42")
 
-[node name="ToNormal" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
+[node name="ToNormal" type="Node" parent="Player/StateChart/CompoundState/TargettingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../NormalState")
 event = &"action_pressed"
 delay_in_seconds = "0.0"
 
-[node name="ToNormal2" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
+[node name="ToNormal2" type="Node" parent="Player/StateChart/CompoundState/TargettingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../NormalState")
 event = &"cancel"
 delay_in_seconds = "0.0"
 
-[node name="ToHaunting" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
+[node name="ToHaunting" type="Node" parent="Player/StateChart/CompoundState/TargettingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../HauntingState")
 event = &"action_confirm"
@@ -160,22 +156,18 @@ delay_in_seconds = "0.0"
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 size = Vector3(0.2, 0.2, 0.2)
 
-[node name="MouseRayCast3D" type="RayCast3D" parent="."]
-unique_name_in_owner = true
-collision_mask = 4
-
 [node name="StateChartDebugger" parent="." instance=ExtResource("12_q4a42")]
 custom_minimum_size = Vector2(300, 0)
 anchors_preset = 9
 anchor_right = 0.0
 offset_right = 18.0
 grow_horizontal = 1
-initial_node_to_watch = NodePath("../CharacterBody3D/StateChart")
+initial_node_to_watch = NodePath("../Player/StateChart")
 
-[connection signal="state_entered" from="CharacterBody3D/StateChart/CompoundState/NormalState" to="CharacterBody3D" method="_on_normal_state_state_entered"]
-[connection signal="state_processing" from="CharacterBody3D/StateChart/CompoundState/NormalState" to="CharacterBody3D" method="_on_normal_state_state_processing"]
-[connection signal="state_entered" from="CharacterBody3D/StateChart/CompoundState/HauntingState" to="CharacterBody3D" method="_on_haunting_state_state_entered"]
-[connection signal="state_exited" from="CharacterBody3D/StateChart/CompoundState/HauntingState" to="CharacterBody3D" method="_on_haunting_state_state_exited"]
-[connection signal="state_entered" from="CharacterBody3D/StateChart/CompoundState/TargettingState" to="CharacterBody3D" method="_on_targetting_state_state_entered"]
-[connection signal="state_exited" from="CharacterBody3D/StateChart/CompoundState/TargettingState" to="CharacterBody3D" method="_on_targetting_state_state_exited"]
-[connection signal="state_processing" from="CharacterBody3D/StateChart/CompoundState/TargettingState" to="CharacterBody3D" method="_on_targetting_state_state_processing"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_entered"]
+[connection signal="state_physics_processing" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_physics_processing"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_exited"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_entered"]
+[connection signal="state_exited" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_exited"]
+[connection signal="state_physics_processing" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_physics_processing"]

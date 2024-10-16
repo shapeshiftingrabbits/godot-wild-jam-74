@@ -44,49 +44,48 @@ script = ExtResource("2_nwsl0")
 mesh = SubResource("BoxMesh_6wpqv")
 skeleton = NodePath("../..")
 
-[node name="StateChart" type="Node" parent="."]
+[node name="ControllableStateChart" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_vpu8p")
 
-[node name="CompoundState" type="Node" parent="StateChart"]
+[node name="CompoundState" type="Node" parent="ControllableStateChart"]
 script = ExtResource("4_hfp0o")
 initial_state = NodePath("IdleState")
 
-[node name="IdleState" type="Node" parent="StateChart/CompoundState"]
+[node name="IdleState" type="Node" parent="ControllableStateChart/CompoundState"]
 script = ExtResource("5_nnef5")
 
-[node name="ToTargeted" type="Node" parent="StateChart/CompoundState/IdleState"]
+[node name="ToTargeted" type="Node" parent="ControllableStateChart/CompoundState/IdleState"]
 script = ExtResource("6_6jmdc")
 to = NodePath("../../TargetedState")
 event = &"targeted"
 delay_in_seconds = "0.0"
 
-[node name="TargetedState" type="Node" parent="StateChart/CompoundState"]
+[node name="TargetedState" type="Node" parent="ControllableStateChart/CompoundState"]
 script = ExtResource("5_nnef5")
 
-[node name="ToHaunted" type="Node" parent="StateChart/CompoundState/TargetedState"]
+[node name="ToHaunted" type="Node" parent="ControllableStateChart/CompoundState/TargetedState"]
 script = ExtResource("6_6jmdc")
 to = NodePath("../../HauntedState")
 event = &"haunt"
 delay_in_seconds = "0.0"
 
-[node name="ToIdle" type="Node" parent="StateChart/CompoundState/TargetedState"]
+[node name="ToIdle" type="Node" parent="ControllableStateChart/CompoundState/TargetedState"]
 script = ExtResource("6_6jmdc")
 to = NodePath("../../IdleState")
 event = &"untargeted"
 delay_in_seconds = "0.0"
 
-[node name="HauntedState" type="Node" parent="StateChart/CompoundState"]
+[node name="HauntedState" type="Node" parent="ControllableStateChart/CompoundState"]
 script = ExtResource("5_nnef5")
 
-[node name="ToIdle2" type="Node" parent="StateChart/CompoundState/HauntedState"]
+[node name="ToIdle2" type="Node" parent="ControllableStateChart/CompoundState/HauntedState"]
 script = ExtResource("6_6jmdc")
 to = NodePath("../../IdleState")
 event = &"unhaunted"
 delay_in_seconds = "0.0"
 
-[connection signal="state_entered" from="StateChart/CompoundState/IdleState" to="TargetIndicator" method="_on_idle_state_state_entered"]
-[connection signal="state_entered" from="StateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_entered"]
-[connection signal="state_exited" from="StateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_exited"]
-[connection signal="state_entered" from="StateChart/CompoundState/HauntedState" to="." method="_on_haunted_state_state_entered"]
-[connection signal="state_exited" from="StateChart/CompoundState/HauntedState" to="." method="_on_haunted_state_state_exited"]
+[connection signal="state_entered" from="ControllableStateChart/CompoundState/IdleState" to="TargetIndicator" method="_on_idle_state_state_entered"]
+[connection signal="state_entered" from="ControllableStateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_entered"]
+[connection signal="state_exited" from="ControllableStateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_exited"]
+[connection signal="state_physics_processing" from="ControllableStateChart/CompoundState/HauntedState" to="." method="_on_haunted_state_state_physics_processing"]
