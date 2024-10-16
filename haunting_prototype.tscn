@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=22 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Script" path="res://check_mouse_position.gd" id="1_3kdpv"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
@@ -7,6 +7,10 @@
 [ext_resource type="Script" path="res://controllable_detection.gd" id="4_mnrto"]
 [ext_resource type="Script" path="res://rotate_with_mouse.gd" id="5_ynxwe"]
 [ext_resource type="Script" path="res://control_enemy.gd" id="7_cb0xk"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="8_v3xjy"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="9_xvk8c"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="10_sdl42"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_xoomb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imhj4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -99,6 +103,42 @@ script = ExtResource("4_mnrto")
 
 [node name="ControlEnemy" type="Node" parent="CharacterBody3D"]
 script = ExtResource("7_cb0xk")
+
+[node name="StateChart" type="Node" parent="CharacterBody3D"]
+script = ExtResource("8_v3xjy")
+
+[node name="CompoundState" type="Node" parent="CharacterBody3D/StateChart"]
+script = ExtResource("9_xvk8c")
+initial_state = NodePath("NormalState")
+
+[node name="NormalState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
+script = ExtResource("10_sdl42")
+
+[node name="ToTargetting" type="Node" parent="CharacterBody3D/StateChart/CompoundState/NormalState"]
+script = ExtResource("11_xoomb")
+to = NodePath("../../TargettingState")
+delay_in_seconds = "0.0"
+
+[node name="HauntingState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
+script = ExtResource("10_sdl42")
+
+[node name="ToNormal" type="Node" parent="CharacterBody3D/StateChart/CompoundState/HauntingState"]
+script = ExtResource("11_xoomb")
+to = NodePath("../../NormalState")
+delay_in_seconds = "0.0"
+
+[node name="TargettingState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
+script = ExtResource("10_sdl42")
+
+[node name="ToNormal" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
+script = ExtResource("11_xoomb")
+to = NodePath("../../NormalState")
+delay_in_seconds = "0.0"
+
+[node name="ToHaunting" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
+script = ExtResource("11_xoomb")
+to = NodePath("../../HauntingState")
+delay_in_seconds = "0.0"
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 size = Vector3(0.2, 0.2, 0.2)

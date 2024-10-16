@@ -9,6 +9,8 @@ const JUMP_VELOCITY = 4.5
 var is_action_toggle: bool = false
 var is_haunting: bool = false
 
+@onready var state_chart: StateChart = $StateChart
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action"):
