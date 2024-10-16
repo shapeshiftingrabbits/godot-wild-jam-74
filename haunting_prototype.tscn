@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=23 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Script" path="res://check_mouse_position.gd" id="1_3kdpv"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
@@ -42,6 +42,9 @@ height = 1.0
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_elfxu"]
 points = PackedVector3Array(0.190622, 0.340095, 0.0427398, -0.193135, -0.338923, -0.0310244, -0.177289, -0.351479, -0.0747747, -0.16398, 0.383904, -0.0753819, -0.0600953, 0.32193, 0.188647, 0.11673, -0.369802, 0.146319, 0.0859448, -0.335648, -0.176689, 0.0278977, 0.339474, -0.193446, -0.147558, -0.335783, 0.129782, 0.188647, -0.32193, -0.0600953, 0.0288523, -0.487654, -0.0625052, -0.0891595, -0.321166, -0.176769, -0.191178, 0.30631, 0.0567225, 0.028905, 0.488499, 0.0594362, 0.144493, 0.336035, -0.133056, 0.099397, 0.317427, 0.171555, -0.0457956, -0.339183, 0.190107, -0.116906, 0.317159, -0.160164, -0.0618573, -0.467355, 0.0888369, 0.186824, -0.289876, 0.0708561, 0.0586138, 0.46682, -0.0919081, -0.122093, 0.451968, 0.0435783, 0.119466, -0.454024, 0.0437837, 0.057189, -0.323406, 0.18952, -0.0470766, 0.47042, -0.0926045, -0.190797, 0.291104, -0.0597801, -0.0766135, -0.450316, -0.106639, -0.147558, 0.335785, 0.129783, 0.190107, 0.339183, -0.0457956, -0.0310246, -0.338926, -0.193136, 0.159071, 0.335966, 0.115245, 0.0427392, 0.34009, 0.19062)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqhaw"]
+albedo_color = Color(0, 1, 0.95, 0.403922)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv7ev"]
 albedo_color = Color(0, 0.0833333, 1, 1)
@@ -87,6 +90,9 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CharacterBody3D"]
+material = SubResource("StandardMaterial3D_cqhaw")
+
 [node name="Pivot" type="Node3D" parent="CharacterBody3D"]
 script = ExtResource("5_ynxwe")
 
@@ -96,7 +102,7 @@ mesh = SubResource("BoxMesh_sdjof")
 skeleton = NodePath("../..")
 
 [node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/Pivot"]
-target_position = Vector3(0, 0, -1)
+target_position = Vector3(0, 0, -5)
 collision_mask = 2
 debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
 script = ExtResource("4_mnrto")
@@ -117,6 +123,7 @@ script = ExtResource("10_sdl42")
 [node name="ToTargetting" type="Node" parent="CharacterBody3D/StateChart/CompoundState/NormalState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../TargettingState")
+event = &"action_pressed"
 delay_in_seconds = "0.0"
 
 [node name="HauntingState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
@@ -125,6 +132,7 @@ script = ExtResource("10_sdl42")
 [node name="ToNormal" type="Node" parent="CharacterBody3D/StateChart/CompoundState/HauntingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../NormalState")
+event = &"cancel"
 delay_in_seconds = "0.0"
 
 [node name="TargettingState" type="Node" parent="CharacterBody3D/StateChart/CompoundState"]
@@ -133,11 +141,19 @@ script = ExtResource("10_sdl42")
 [node name="ToNormal" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../NormalState")
+event = &"action_pressed"
+delay_in_seconds = "0.0"
+
+[node name="ToNormal2" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
+script = ExtResource("11_xoomb")
+to = NodePath("../../NormalState")
+event = &"cancel"
 delay_in_seconds = "0.0"
 
 [node name="ToHaunting" type="Node" parent="CharacterBody3D/StateChart/CompoundState/TargettingState"]
 script = ExtResource("11_xoomb")
 to = NodePath("../../HauntingState")
+event = &"action_confirm"
 delay_in_seconds = "0.0"
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]

@@ -10,17 +10,19 @@ var is_action_toggle: bool = false
 var is_haunting: bool = false
 
 @onready var state_chart: StateChart = $StateChart
+@onready var direction_indicator: MeshInstance3D = $Pivot/DirectionIndicator
+@onready var csg_sphere_3d: CSGSphere3D = $CSGSphere3D
 
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("action"):
-		is_action_toggle = true
+		state_chart.send_event("action_pressed")
 	if event.is_action_pressed("action_confirm"):
-		if is_action_toggle:
-			send_haunting()
-			
-func send_haunting():
-	pass
+		state_chart.send_event("action_confirm")
+	if event.is_action_pressed("cancel"):
+		state_chart.send_event("cancel")
+
+
 
 func _physics_process(delta: float) -> void:
 	
