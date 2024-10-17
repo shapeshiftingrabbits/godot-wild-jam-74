@@ -1,5 +1,6 @@
 extends RayCast3D
 
+signal targeted(controllable: Controllable)
 
 var controllables: Array[Node] = []
 
@@ -12,7 +13,14 @@ func _physics_process(delta: float) -> void:
 		var collider = get_collider() as Node3D
 		if collider.has_method("set_targeted"):
 			collider.set_targeted(true)
+			collider.add_to_group("valid_target")
+			targeted.emit(collider)
 			var others = controllables.filter(func (controllable: Controllable): return controllable != collider)
-			others.map(func (controllable: Controllable): controllable.set_targeted(false))
+			others.map(untarget)
 	else :
 		controllables.map( func (controllable: Controllable): controllable.set_targeted(false))
+
+
+func untarget(controllable: Controllable):
+	controllable.set_targeted(false)
+	controllable.remove_from_group("valid_target")

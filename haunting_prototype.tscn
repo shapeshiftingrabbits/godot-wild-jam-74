@@ -79,7 +79,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26727, 0.735282, -2.03005)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.0871558, 0.996195, 0, -0.996195, 0.0871558, 0, 5, 0.077)
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
 script = ExtResource("2_tm0ii")
 
@@ -168,6 +168,8 @@ initial_node_to_watch = NodePath("../Player/StateChart")
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_exited"]
+[connection signal="state_input" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_input"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_entered"]
 [connection signal="state_exited" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_exited"]
+[connection signal="state_input" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_input"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_physics_processing"]

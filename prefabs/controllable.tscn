@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf4xgew11g0y6"]
+[gd_scene load_steps=13 format=3 uid="uid://bf4xgew11g0y6"]
 
 [ext_resource type="Script" path="res://controllable.gd" id="1_7e0kx"]
 [ext_resource type="Script" path="res://prefabs/target_indicator.gd" id="2_nwsl0"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_hfp0o"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_nnef5"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_6jmdc"]
+[ext_resource type="PackedScene" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="7_mbufp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l67q"]
 albedo_color = Color(1, 0, 0.483334, 1)
@@ -67,7 +68,7 @@ script = ExtResource("5_nnef5")
 [node name="ToHaunted" type="Node" parent="ControllableStateChart/CompoundState/TargetedState"]
 script = ExtResource("6_6jmdc")
 to = NodePath("../../HauntedState")
-event = &"haunt"
+event = &"haunted"
 delay_in_seconds = "0.0"
 
 [node name="ToIdle" type="Node" parent="ControllableStateChart/CompoundState/TargetedState"]
@@ -84,6 +85,14 @@ script = ExtResource("6_6jmdc")
 to = NodePath("../../IdleState")
 event = &"unhaunted"
 delay_in_seconds = "0.0"
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("7_mbufp")]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 11
+anchor_left = 1.0
+offset_left = -18.0
+grow_horizontal = 0
+initial_node_to_watch = NodePath("../ControllableStateChart")
 
 [connection signal="state_entered" from="ControllableStateChart/CompoundState/IdleState" to="TargetIndicator" method="_on_idle_state_state_entered"]
 [connection signal="state_entered" from="ControllableStateChart/CompoundState/TargetedState" to="TargetIndicator" method="_on_targeted_state_state_entered"]
