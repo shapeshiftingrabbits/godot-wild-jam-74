@@ -11,7 +11,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if (is_colliding()):
 		var collider = get_collider() as Node3D
-		if collider.has_method("set_targeted"):
+		if collider is Controllable:
 			collider.set_targeted(true)
 			collider.add_to_group("valid_target")
 			targeted.emit(collider)
