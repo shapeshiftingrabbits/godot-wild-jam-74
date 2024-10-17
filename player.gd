@@ -8,9 +8,10 @@ const JUMP_VELOCITY = 4.5
 
 
 @onready var state_chart: StateChart = $StateChart
-@onready var direction_indicator: MeshInstance3D = $Pivot/DirectionIndicator
+@onready var direction_indicator: Node3D = $Pivot/DirectionIndicator
 @onready var csg_sphere_3d: CSGSphere3D = $CSGSphere3D
-@onready var controllable_ray_cast_3d: RayCast3D = $Pivot/ControllableRayCast3D
+
+@onready var area_3d: Area3D = $Pivot/Area3D
 
 var current_haunted_target: Controllable
 
@@ -48,7 +49,6 @@ func get_valid_target() -> Controllable:
 
 
 func _physics_process(delta: float) -> void:
-	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -57,16 +57,16 @@ func _physics_process(delta: float) -> void:
 func _on_normal_state_state_entered() -> void:
 	direction_indicator.hide()
 	csg_sphere_3d.hide()
-	controllable_ray_cast_3d.enabled = false
+	area_3d.monitoring = false
 
 
 func _on_targetting_state_state_entered() -> void:
-	controllable_ray_cast_3d.enabled = true
+	area_3d.monitoring = true
 	direction_indicator.show()
 
 
 func _on_targetting_state_state_exited() -> void:
-	controllable_ray_cast_3d.enabled = false
+	area_3d.monitoring = false
 	direction_indicator.hide()
 
 

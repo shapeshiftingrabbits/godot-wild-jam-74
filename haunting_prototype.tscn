@@ -1,6 +1,5 @@
-[gd_scene load_steps=23 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=22 format=3 uid="uid://cylce3ac7an7f"]
 
-[ext_resource type="Script" path="res://check_mouse_position.gd" id="1_3kdpv"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
 [ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="2_o268x"]
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
@@ -46,12 +45,11 @@ points = PackedVector3Array(0.190622, 0.340095, 0.0427398, -0.193135, -0.338923,
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqhaw"]
 albedo_color = Color(0, 1, 0.95, 0.403922)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nv7ev"]
-albedo_color = Color(0, 0.0833333, 1, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_wyyjr"]
+size = Vector3(0.4, 2, 5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_sdjof"]
-material = SubResource("StandardMaterial3D_nv7ev")
-size = Vector3(0.2, 0.2, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xn6at"]
+albedo_color = Color(1, 0, 0.95, 0.403922)
 
 [node name="Root" type="Node3D"]
 
@@ -64,7 +62,6 @@ environment = SubResource("Environment_b3wwa")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 5
-script = ExtResource("1_3kdpv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_sgmla")
@@ -91,21 +88,40 @@ skeleton = NodePath("")
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Player"]
+transparency = 0.8
 material = SubResource("StandardMaterial3D_cqhaw")
 
 [node name="Pivot" type="Node3D" parent="Player"]
 script = ExtResource("5_ynxwe")
 
-[node name="DirectionIndicator" type="MeshInstance3D" parent="Player/Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.04104)
-mesh = SubResource("BoxMesh_sdjof")
-skeleton = NodePath("../..")
-
-[node name="ControllableRayCast3D" type="RayCast3D" parent="Player/Pivot"]
-target_position = Vector3(0, 0, -10)
+[node name="Area3D" type="Area3D" parent="Player/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.470406, -3.075)
 collision_mask = 2
-debug_shape_custom_color = Color(0.159225, 0.99, 0.0495, 1)
 script = ExtResource("4_mnrto")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Pivot/Area3D"]
+shape = SubResource("BoxShape3D_wyyjr")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Player/Pivot/Area3D"]
+transparency = 0.8
+size = Vector3(0.4, 2, 5)
+material = SubResource("StandardMaterial3D_xn6at")
+
+[node name="DirectionIndicator" type="Node3D" parent="Player/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.490813)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Player/Pivot/DirectionIndicator"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -3.08066)
+radius = 0.1
+height = 4.0
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Player/Pivot/DirectionIndicator"]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0.306783, 0, -5.59291)
+size = Vector3(0.3, 0.2, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Player/Pivot/DirectionIndicator"]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -0.129994, 0.00134039, -5.58785)
+size = Vector3(0.3, 0.2, 1)
 
 [node name="StateChart" type="Node" parent="Player"]
 script = ExtResource("8_v3xjy")
@@ -164,6 +180,8 @@ offset_right = 18.0
 grow_horizontal = 1
 initial_node_to_watch = NodePath("../Player/StateChart")
 
+[connection signal="body_entered" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_entered"]
+[connection signal="body_exited" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_exited"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_entered"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_entered"]
