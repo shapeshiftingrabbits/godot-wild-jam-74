@@ -81,6 +81,7 @@ albedo_color = Color(1, 0, 0.95, 0.403922)
 [sub_resource type="Theme" id="Theme_sdmj6"]
 
 [node name="Root" type="Node3D"]
+metadata/_edit_vertical_guides_ = [-1927.0]
 
 [node name="Level" type="Node3D" parent="."]
 
@@ -257,14 +258,15 @@ enabled = false
 initial_node_to_watch = NodePath("../Player/StateChart")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(200, 200)
 offset_right = 312.0
-offset_bottom = 200.0
+offset_bottom = 64.0
+size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("12_ak4db")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("15_jjqdq")
 
@@ -286,7 +288,9 @@ theme = ExtResource("15_jjqdq")
 text = "CancelCancelCancelCancel"
 
 [node name="TargetModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
+size_flags_horizontal = 0
 theme = ExtResource("15_jjqdq")
 script = ExtResource("12_xgk82")
 icon = ExtResource("14_0qnn5")
@@ -340,3 +344,4 @@ text = "Cancel"
 [connection signal="state_exited" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_exited"]
 [connection signal="state_input" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_input"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_physics_processing"]
+[connection signal="resized" from="PanelContainer/VBoxContainer" to="PanelContainer" method="_on_v_box_container_resized"]
