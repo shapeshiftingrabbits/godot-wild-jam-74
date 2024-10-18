@@ -18,7 +18,7 @@ albedo_texture = ExtResource("1_p8klg")
 
 [sub_resource type="BoxMesh" id="BoxMesh_7dm8p"]
 material = SubResource("StandardMaterial3D_fcvr3")
-size = Vector3(1, 1, 8)
+size = Vector3(1, 2, 8)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nlsft"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
@@ -124,7 +124,9 @@ material = SubResource("StandardMaterial3D_5e1sp")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26727, 0.735282, -2.03005)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.0871558, 0.996195, 0, -0.996195, 0.0871558, 0, 8, 0)
+transform = Transform3D(1, 0, 0, 0, 0.112492, 0.993653, 0, -0.993653, 0.112492, -0.00297737, 6.07282, 0.266064)
+current = true
+size = 6.366
 
 [node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
