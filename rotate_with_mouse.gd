@@ -5,12 +5,14 @@ extends Node3D
 @onready var character_body_3d: CharacterBody3D = $".."
 
 @onready var csg_box_3d: CSGBox3D = $"../../CSGBox3D"
+@onready var player: Player = $".."
 
 
 const RAY_LENGTH = 1000
 
 var debug_cube_position = Vector3(0.0,0.1,0.0)
-var looking_position = Vector3(0.0,0.0,0.0)
+var looking_position = Vector3(0.0,1.0,0.0)
+
 func _physics_process(delta: float) -> void:
 	test_collision_with_query(delta)
 
@@ -27,9 +29,6 @@ func test_collision_with_query(delta: float):
 	var result = space_state.intersect_ray(query)
 	if result:
 		csg_box_3d.position = result.position
-
-		#rotation.x = lerp_angle( rotation.x, atan2( result.position.x, result.position.x ), delta )
-		#rotation.z = lerp_angle( rotation.z, atan2( result.position.z, result.position.z ), delta )
-		#rotation.y = lerp_angle( rotation.y, atan2( -result.position.x, -result.position.z ), 1.0 )
-		rotation.y = atan2(- result.position.x, - result.position.z )
-		
+		looking_position.x = result.position.x
+		looking_position.z = result.position.z
+		look_at_from_position(player.position,looking_position)
