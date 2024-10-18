@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=36 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
 [ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="2_o268x"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://buyw8cncaolac" path="res://textures_keyboard_controls/keyboard_escape.svg" id="13_7aih0"]
 [ext_resource type="Texture2D" uid="uid://j7s00sh2y6r4" path="res://textures_keyboard_controls/keyboard_f.svg" id="14_0qnn5"]
 [ext_resource type="Texture2D" uid="uid://bd8ta4wtwm3wr" path="res://textures_keyboard_controls/mouse_left.svg" id="15_chj1h"]
+[ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://godot_state_charts_examples/new_theme.tres" id="15_jjqdq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcvr3"]
 albedo_color = Color(0, 0.4, 1, 1)
@@ -76,6 +77,8 @@ size = Vector3(0.4, 2, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xn6at"]
 albedo_color = Color(1, 0, 0.95, 0.403922)
+
+[sub_resource type="Theme" id="Theme_sdmj6"]
 
 [node name="Root" type="Node3D"]
 
@@ -253,79 +256,87 @@ grow_horizontal = 1
 enabled = false
 initial_node_to_watch = NodePath("../Player/StateChart")
 
-[node name="Panel" type="Panel" parent="."]
-offset_top = 204.0
-offset_right = 120.0
-offset_bottom = 204.0
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(200, 200)
+offset_right = 312.0
+offset_bottom = 200.0
+size_flags_vertical = 0
 script = ExtResource("12_ak4db")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CancelControlToolTip" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("15_jjqdq")
+
+[node name="CancelControlToolTip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_sdmj6")
 script = ExtResource("12_xgk82")
 icon = ExtResource("13_7aih0")
 title = "Cancel"
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/CancelControlToolTip"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/CancelControlToolTip"]
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 texture = ExtResource("13_7aih0")
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/CancelControlToolTip"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/CancelControlToolTip"]
 layout_mode = 2
-text = "Cancel"
+theme = ExtResource("15_jjqdq")
+text = "CancelCancelCancelCancel"
 
-[node name="TargetModeControlTooltip" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="TargetModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 script = ExtResource("12_xgk82")
 icon = ExtResource("14_0qnn5")
 title = "Target Mode"
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/TargetModeControlTooltip"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/TargetModeControlTooltip"]
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 texture = ExtResource("13_7aih0")
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/TargetModeControlTooltip"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TargetModeControlTooltip"]
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 text = "Cancel"
 
-[node name="HauntingModeControlTooltip" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="HauntingModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 script = ExtResource("12_xgk82")
 icon = ExtResource("15_chj1h")
 title = "Haunting Mode"
 
-[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HauntingModeControlTooltip"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/HauntingModeControlTooltip"]
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 texture = ExtResource("13_7aih0")
 
-[node name="Label" type="Label" parent="Panel/VBoxContainer/HauntingModeControlTooltip"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HauntingModeControlTooltip"]
 layout_mode = 2
+theme = ExtResource("15_jjqdq")
 text = "Cancel"
 
 [connection signal="body_entered" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_entered"]
 [connection signal="body_exited" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_exited"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_entered"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Panel/VBoxContainer/CancelControlToolTip" method="hide"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Panel/VBoxContainer/TargetModeControlTooltip" method="show"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Panel/VBoxContainer/HauntingModeControlTooltip" method="hide"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="PanelContainer/VBoxContainer/CancelControlToolTip" method="hide"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="PanelContainer/VBoxContainer/TargetModeControlTooltip" method="show"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="PanelContainer/VBoxContainer/HauntingModeControlTooltip" method="hide"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_physics_processing"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_entered"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Panel/VBoxContainer/CancelControlToolTip" method="show"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Panel/VBoxContainer/TargetModeControlTooltip" method="hide"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="Panel/VBoxContainer/HauntingModeControlTooltip" method="hide"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="PanelContainer/VBoxContainer/CancelControlToolTip" method="show"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="PanelContainer/VBoxContainer/TargetModeControlTooltip" method="hide"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/HauntingState" to="PanelContainer/VBoxContainer/HauntingModeControlTooltip" method="hide"]
 [connection signal="state_exited" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_exited"]
 [connection signal="state_input" from="Player/StateChart/CompoundState/HauntingState" to="Player" method="_on_haunting_state_state_input"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_entered"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="Panel/VBoxContainer/CancelControlToolTip" method="show"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="Panel/VBoxContainer/TargetModeControlTooltip" method="hide"]
-[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="Panel/VBoxContainer/HauntingModeControlTooltip" method="show"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="PanelContainer/VBoxContainer/CancelControlToolTip" method="show"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="PanelContainer/VBoxContainer/TargetModeControlTooltip" method="hide"]
+[connection signal="state_entered" from="Player/StateChart/CompoundState/TargettingState" to="PanelContainer/VBoxContainer/HauntingModeControlTooltip" method="show"]
 [connection signal="state_exited" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_exited"]
 [connection signal="state_input" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_input"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_physics_processing"]
