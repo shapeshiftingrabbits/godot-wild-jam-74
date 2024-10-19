@@ -19,7 +19,6 @@ func _ready() -> void:
 
 
 func _on_pressure_plate_actived(status: bool) -> void:
-	print("_on_pressure_plate_actived: ", status)
 	lock_1 = status
 	check_locks()
 

@@ -9,7 +9,6 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	print("_on_body_entered")
 	var controllable = body as Controllable
 	controllable.set_targeted(true)
 	controllable.add_to_group("valid_target")
@@ -24,6 +23,5 @@ func _untarget(controllable: Controllable):
 
 
 func _on_body_exited(body: Node3D) -> void:
-	print("_on_body_exited")
 	var controllable = body as Controllable
 	_untarget(controllable)
