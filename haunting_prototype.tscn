@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=47 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://kenney_prototype-textures/pngs/texture_wall.png" id="1_cm5q3"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
@@ -21,6 +21,7 @@
 [ext_resource type="Script" path="res://pressure_plate.gd" id="18_s5klu"]
 [ext_resource type="Material" uid="uid://ci4bmfeh301bt" path="res://materials/pressure_plate_material_normal_1.tres" id="19_0gneh"]
 [ext_resource type="Material" uid="uid://0v46os1n31bx" path="res://materials/pressure_plate_material_pressed.tres" id="19_45y5y"]
+[ext_resource type="Material" uid="uid://bi43a1i0y5ylb" path="res://materials/pressure_plate_material_desactivated.tres" id="20_51nhj"]
 [ext_resource type="Material" uid="uid://hyvreme4ba37" path="res://materials/pressure_plate_material_normal_2.tres" id="21_4idxb"]
 [ext_resource type="Script" path="res://door.gd" id="23_s04dm"]
 [ext_resource type="Material" uid="uid://sp0ojd44sa8w" path="res://materials/door_closed_material.tres" id="23_s7k4x"]
@@ -339,29 +340,31 @@ layout_mode = 2
 theme = ExtResource("15_jjqdq")
 text = "Cancel"
 
-[node name="PressurePlate" type="Area3D" parent="."]
+[node name="PlayerPressurePlate" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.495, 0.5, -2.545)
 collision_mask = 10
 script = ExtResource("18_s5klu")
 pressed_material = ExtResource("19_45y5y")
+deactivated_material = ExtResource("20_51nhj")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PressurePlate"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPressurePlate"]
 shape = SubResource("BoxShape3D_l5k13")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="PressurePlate/CollisionShape3D"]
+[node name="CSGBox3D" type="CSGBox3D" parent="PlayerPressurePlate/CollisionShape3D"]
 size = Vector3(1, 0.1, 1)
 material = ExtResource("19_0gneh")
 
-[node name="PressurePlate2" type="Area3D" parent="."]
+[node name="ControllablePressurePlate" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.629, 0.5, -2.545)
 collision_mask = 10
 script = ExtResource("18_s5klu")
 pressed_material = ExtResource("19_45y5y")
+deactivated_material = ExtResource("20_51nhj")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PressurePlate2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ControllablePressurePlate"]
 shape = SubResource("BoxShape3D_l5k13")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="PressurePlate2/CollisionShape3D"]
+[node name="CSGBox3D" type="CSGBox3D" parent="ControllablePressurePlate/CollisionShape3D"]
 size = Vector3(1, 0.1, 1)
 material = ExtResource("21_4idxb")
 
@@ -398,11 +401,11 @@ material = ExtResource("23_s7k4x")
 [connection signal="state_input" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_input"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_physics_processing"]
 [connection signal="resized" from="PanelContainer/VBoxContainer" to="PanelContainer" method="_on_v_box_container_resized"]
-[connection signal="actived" from="PressurePlate" to="Door" method="_on_pressure_plate_actived"]
-[connection signal="body_entered" from="PressurePlate" to="PressurePlate" method="_on_body_entered"]
-[connection signal="body_exited" from="PressurePlate" to="PressurePlate" method="_on_body_exited"]
-[connection signal="actived" from="PressurePlate2" to="Door" method="_on_pressure_plate_2_actived"]
-[connection signal="body_entered" from="PressurePlate2" to="PressurePlate2" method="_on_body_entered"]
-[connection signal="body_exited" from="PressurePlate2" to="PressurePlate2" method="_on_body_exited"]
-[connection signal="unlocked" from="Door" to="PressurePlate" method="deactivate"]
-[connection signal="unlocked" from="Door" to="PressurePlate2" method="deactivate"]
+[connection signal="actived" from="PlayerPressurePlate" to="Door" method="_on_pressure_plate_actived"]
+[connection signal="body_entered" from="PlayerPressurePlate" to="PlayerPressurePlate" method="_on_body_entered"]
+[connection signal="body_exited" from="PlayerPressurePlate" to="PlayerPressurePlate" method="_on_body_exited"]
+[connection signal="actived" from="ControllablePressurePlate" to="Door" method="_on_pressure_plate_2_actived"]
+[connection signal="body_entered" from="ControllablePressurePlate" to="ControllablePressurePlate" method="_on_body_entered"]
+[connection signal="body_exited" from="ControllablePressurePlate" to="ControllablePressurePlate" method="_on_body_exited"]
+[connection signal="unlocked" from="Door" to="PlayerPressurePlate" method="_on_door_unlocked"]
+[connection signal="unlocked" from="Door" to="ControllablePressurePlate" method="_on_door_unlocked"]

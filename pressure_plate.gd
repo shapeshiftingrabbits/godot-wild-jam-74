@@ -3,6 +3,7 @@ extends Area3D
 signal actived(status: bool)
 
 @export var pressed_material: Material
+@export var deactivated_material: Material
 var normal_material: Material
 @onready var csg_box_3d: CSGBox3D = $CollisionShape3D/CSGBox3D
 
@@ -21,5 +22,7 @@ func _on_body_exited(body: Node3D) -> void:
 	actived.emit(false)
 
 
-func deactivate():
-	monitoring = false
+func _on_door_unlocked() -> void:
+	csg_box_3d.material = deactivated_material
+	disconnect("body_entered", _on_body_entered)
+	disconnect("body_exited", _on_body_exited)
