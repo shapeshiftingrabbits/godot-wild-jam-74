@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bf4xgew11g0y6"]
 
-[ext_resource type="Script" path="res://controllable.gd" id="1_7e0kx"]
+[ext_resource type="Script" path="res://scripts/controllable.gd" id="1_7e0kx"]
 [ext_resource type="Script" path="res://prefabs/target_indicator.gd" id="2_nwsl0"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_vpu8p"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_hfp0o"]

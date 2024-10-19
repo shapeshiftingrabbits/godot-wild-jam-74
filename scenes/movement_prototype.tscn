@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://23ehmdbk4wos"]
 
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_6sibm"]
-[ext_resource type="Script" path="res://player.gd" id="1_57i2p"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_57i2p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_imhj4"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
