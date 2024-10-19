@@ -1,5 +1,6 @@
-[gd_scene load_steps=36 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=46 format=3 uid="uid://cylce3ac7an7f"]
 
+[ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://kenney_prototype-textures/pngs/texture_wall.png" id="1_cm5q3"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="1_p8klg"]
 [ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="2_o268x"]
 [ext_resource type="Script" path="res://player.gd" id="2_tm0ii"]
@@ -17,10 +18,17 @@
 [ext_resource type="Texture2D" uid="uid://j7s00sh2y6r4" path="res://textures_keyboard_controls/keyboard_f.svg" id="14_0qnn5"]
 [ext_resource type="Texture2D" uid="uid://bd8ta4wtwm3wr" path="res://textures_keyboard_controls/mouse_left.svg" id="15_chj1h"]
 [ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://godot_state_charts_examples/new_theme.tres" id="15_jjqdq"]
+[ext_resource type="Script" path="res://pressure_plate.gd" id="18_s5klu"]
+[ext_resource type="Material" uid="uid://ci4bmfeh301bt" path="res://materials/pressure_plate_material_normal_1.tres" id="19_0gneh"]
+[ext_resource type="Material" uid="uid://0v46os1n31bx" path="res://materials/pressure_plate_material_pressed.tres" id="19_45y5y"]
+[ext_resource type="Material" uid="uid://hyvreme4ba37" path="res://materials/pressure_plate_material_normal_2.tres" id="21_4idxb"]
+[ext_resource type="Script" path="res://door.gd" id="23_s04dm"]
+[ext_resource type="Material" uid="uid://sp0ojd44sa8w" path="res://materials/door_closed_material.tres" id="23_s7k4x"]
+[ext_resource type="Material" uid="uid://c77sbps2wumbt" path="res://materials/door_open_material.tres" id="24_uway1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcvr3"]
-albedo_color = Color(0, 0.4, 1, 1)
-albedo_texture = ExtResource("1_p8klg")
+albedo_color = Color(0.28, 0.128053, 0.0336, 1)
+albedo_texture = ExtResource("1_cm5q3")
 
 [sub_resource type="BoxMesh" id="BoxMesh_7dm8p"]
 material = SubResource("StandardMaterial3D_fcvr3")
@@ -79,6 +87,12 @@ size = Vector3(0.4, 2, 5)
 albedo_color = Color(1, 0, 0.95, 0.403922)
 
 [sub_resource type="Theme" id="Theme_sdmj6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l5k13"]
+size = Vector3(1, 0.1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v384s"]
+size = Vector3(1, 1, 0.5)
 
 [node name="Root" type="Node3D"]
 metadata/_edit_vertical_guides_ = [-1927.0]
@@ -148,6 +162,7 @@ size = 6.366
 
 [node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
+collision_layer = 8
 script = ExtResource("2_tm0ii")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
@@ -324,6 +339,44 @@ layout_mode = 2
 theme = ExtResource("15_jjqdq")
 text = "Cancel"
 
+[node name="PressurePlate" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.495, 0.5, -2.545)
+collision_mask = 10
+script = ExtResource("18_s5klu")
+pressed_material = ExtResource("19_45y5y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PressurePlate"]
+shape = SubResource("BoxShape3D_l5k13")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PressurePlate/CollisionShape3D"]
+size = Vector3(1, 0.1, 1)
+material = ExtResource("19_0gneh")
+
+[node name="PressurePlate2" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.629, 0.5, -2.545)
+collision_mask = 10
+script = ExtResource("18_s5klu")
+pressed_material = ExtResource("19_45y5y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PressurePlate2"]
+shape = SubResource("BoxShape3D_l5k13")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="PressurePlate2/CollisionShape3D"]
+size = Vector3(1, 0.1, 1)
+material = ExtResource("21_4idxb")
+
+[node name="Door" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.3082)
+script = ExtResource("23_s04dm")
+open_material = ExtResource("24_uway1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
+shape = SubResource("BoxShape3D_v384s")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Door/CollisionShape3D"]
+size = Vector3(1, 1, 0.5)
+material = ExtResource("23_s7k4x")
+
 [connection signal="body_entered" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_entered"]
 [connection signal="body_exited" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_exited"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_entered"]
@@ -345,3 +398,11 @@ text = "Cancel"
 [connection signal="state_input" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_input"]
 [connection signal="state_physics_processing" from="Player/StateChart/CompoundState/TargettingState" to="Player" method="_on_targetting_state_state_physics_processing"]
 [connection signal="resized" from="PanelContainer/VBoxContainer" to="PanelContainer" method="_on_v_box_container_resized"]
+[connection signal="actived" from="PressurePlate" to="Door" method="_on_pressure_plate_actived"]
+[connection signal="body_entered" from="PressurePlate" to="PressurePlate" method="_on_body_entered"]
+[connection signal="body_exited" from="PressurePlate" to="PressurePlate" method="_on_body_exited"]
+[connection signal="actived" from="PressurePlate2" to="Door" method="_on_pressure_plate_2_actived"]
+[connection signal="body_entered" from="PressurePlate2" to="PressurePlate2" method="_on_body_entered"]
+[connection signal="body_exited" from="PressurePlate2" to="PressurePlate2" method="_on_body_exited"]
+[connection signal="unlocked" from="Door" to="PressurePlate" method="deactivate"]
+[connection signal="unlocked" from="Door" to="PressurePlate2" method="deactivate"]

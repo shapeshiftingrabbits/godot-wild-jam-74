@@ -62,3 +62,4 @@ cancel={
 3d_physics/layer_1="default"
 3d_physics/layer_2="controllable"
 3d_physics/layer_3="floor"
+3d_physics/layer_4="player"

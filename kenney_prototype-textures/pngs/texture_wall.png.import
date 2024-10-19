@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7yyyrn2f52m8"
-path.s3tc="res://.godot/imported/texture_08.svg-474a30972ede230dec8d514b8cbf2571.s3tc.ctex"
+uid="uid://ic5qk4rajw6o"
+path.s3tc="res://.godot/imported/texture_wall.png-980c40760489f94ceb58673a46c8d62a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://kenney_prototype-textures/Vector/texture_08.svg"
-dest_files=["res://.godot/imported/texture_08.svg-474a30972ede230dec8d514b8cbf2571.s3tc.ctex"]
+source_file="res://kenney_prototype-textures/pngs/texture_wall.png"
+dest_files=["res://.godot/imported/texture_wall.png-980c40760489f94ceb58673a46c8d62a.s3tc.ctex"]
 
 [params]
 
@@ -33,6 +33,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=0
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

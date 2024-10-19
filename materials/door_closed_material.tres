@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://sp0ojd44sa8w"]
+
+[ext_resource type="Texture2D" uid="uid://dwvi1hm3kybdr" path="res://kenney_prototype-textures/pngs/texture_door.png" id="1_x5vxv"]
+
+[resource]
+albedo_color = Color(1, 0.383333, 0, 1)
+albedo_texture = ExtResource("1_x5vxv")
+uv1_scale = Vector3(1, 1, 0.5)

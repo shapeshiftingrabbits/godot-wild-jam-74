@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://hyvreme4ba37"]
+
+[ext_resource type="Texture2D" uid="uid://c5dgltiipef82" path="res://kenney_prototype-textures/pngs/texture_checkered.png" id="1_8srn6"]
+
+[resource]
+albedo_color = Color(0.75, 0, 1, 1)
+albedo_texture = ExtResource("1_8srn6")
