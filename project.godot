@@ -68,3 +68,8 @@ cancel={
 3d_physics/layer_2="controllable"
 3d_physics/layer_3="floor"
 3d_physics/layer_4="player"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
