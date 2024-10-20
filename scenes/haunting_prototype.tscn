@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=57 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://textures/kenney_prototype_textures/pngs/texture_wall.png" id="1_qqhmi"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://textures/kenney_prototype_textures/Vector/texture_01.svg" id="2_b5gw6"]
@@ -34,6 +34,8 @@
 [ext_resource type="Script" path="res://scripts/hud.gd" id="32_0ytfw"]
 [ext_resource type="Texture2D" uid="uid://joi7cqprkevr" path="res://textures/textures_keyboard_controls/keyboard_1.svg" id="32_8422h"]
 [ext_resource type="Script" path="res://scripts/ghost.gd" id="34_hm22k"]
+[ext_resource type="Script" path="res://scripts/dialogue_box.gd" id="35_gwsul"]
+[ext_resource type="Script" path="res://scripts/end_dialogue_box.gd" id="36_s16qu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcvr3"]
 albedo_color = Color(0.28, 0.128053, 0.0336, 1)
@@ -296,6 +298,7 @@ size_flags_vertical = 0
 theme = ExtResource("14_obel2")
 
 [node name="CancelControlToolTip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = SubResource("Theme_sdmj6")
 script = ExtResource("15_b5hgk")
@@ -313,6 +316,7 @@ theme = ExtResource("14_obel2")
 text = "CancelCancelCancelCancel"
 
 [node name="TargetModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 theme = ExtResource("14_obel2")
@@ -331,6 +335,7 @@ theme = ExtResource("14_obel2")
 text = "Cancel"
 
 [node name="HauntingModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("14_obel2")
 script = ExtResource("15_b5hgk")
@@ -402,6 +407,7 @@ size = Vector3(1, 1, 0.5)
 material = ExtResource("26_grx74")
 
 [node name="HUD" type="VBoxContainer" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -529,6 +535,130 @@ delay_in_seconds = "0.0"
 unique_name_in_owner = true
 size = Vector3(0.3, 0.3, 0.3)
 
+[node name="DialogueBox" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.6
+anchor_right = 0.8
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("35_gwsul")
+
+[node name="Dialogue1" type="VBoxContainer" parent="DialogueBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="DialogueBox/Dialogue1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "You"
+
+[node name="Label2" type="Label" parent="DialogueBox/Dialogue1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Where am I?"
+
+[node name="SkipButton" type="Button" parent="DialogueBox/Dialogue1"]
+layout_mode = 2
+text = "Oh, A Puzzle! Let's go!"
+
+[node name="MoreButton" type="Button" parent="DialogueBox/Dialogue1"]
+layout_mode = 2
+text = "I wish someone could tell me more..."
+
+[node name="Dialogue2" type="VBoxContainer" parent="DialogueBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="DialogueBox/Dialogue2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Ghost"
+
+[node name="Label2" type="Label" parent="DialogueBox/Dialogue2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "You bought this retro game from a misterious store. I died while trying to finish this game, so now I am haunting it!"
+autowrap_mode = 2
+
+[node name="OkButton" type="Button" parent="DialogueBox/Dialogue2"]
+layout_mode = 2
+text = "Is there any way out ?!"
+
+[node name="Dialogue3" type="VBoxContainer" parent="DialogueBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="DialogueBox/Dialogue3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Ghost"
+
+[node name="Label2" type="Label" parent="DialogueBox/Dialogue3"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Finish this level, and I will be free! But it is veeeeerrrrryyy difficult! Dare I say impossible !"
+autowrap_mode = 2
+
+[node name="GoButton" type="Button" parent="DialogueBox/Dialogue3"]
+layout_mode = 2
+text = "Let's go! "
+
+[node name="EndDialogueBox" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.6
+anchor_right = 0.8
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("36_s16qu")
+
+[node name="Dialogue1" type="VBoxContainer" parent="EndDialogueBox"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="EndDialogueBox/Dialogue1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+text = "Ghost"
+
+[node name="Label2" type="Label" parent="EndDialogueBox/Dialogue1"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Oh my glob! You finished the level! I guess it was not so hard after all! Oopsies! "
+autowrap_mode = 2
+
+[node name="EndButton" type="Button" parent="EndDialogueBox/Dialogue1"]
+layout_mode = 2
+text = "ooo....ooook... At least I'm free now..."
+
+[node name="Dialogue2" type="VBoxContainer" parent="EndDialogueBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label2" type="Label" parent="EndDialogueBox/Dialogue2"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "You have beat the game! Which was very hard....
+You are free!
+Thank you for playing !"
+autowrap_mode = 2
+
+[node name="EndButton2" type="Button" parent="EndDialogueBox/Dialogue2"]
+layout_mode = 2
+text = "Sure...."
+
 [connection signal="haunting" from="Player" to="Ghost" method="_on_player_haunting"]
 [connection signal="stop_hauting" from="Player" to="Ghost" method="_on_player_stop_hauting"]
 [connection signal="body_entered" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_entered"]
@@ -575,3 +705,9 @@ size = Vector3(0.3, 0.3, 0.3)
 [connection signal="state_processing" from="Ghost/StateChart/CompoundState/IdleState" to="Ghost" method="_on_idle_state_state_processing"]
 [connection signal="state_entered" from="Ghost/StateChart/CompoundState/MoveState" to="Ghost" method="_on_move_state_state_entered"]
 [connection signal="state_exited" from="Ghost/StateChart/CompoundState/MoveState" to="Ghost" method="_on_move_state_state_exited"]
+[connection signal="pressed" from="DialogueBox/Dialogue1/SkipButton" to="DialogueBox" method="_on_skip_button_pressed"]
+[connection signal="pressed" from="DialogueBox/Dialogue1/MoreButton" to="DialogueBox" method="_on_more_button_pressed"]
+[connection signal="pressed" from="DialogueBox/Dialogue2/OkButton" to="DialogueBox" method="_on_ok_button_pressed"]
+[connection signal="pressed" from="DialogueBox/Dialogue3/GoButton" to="DialogueBox" method="_on_go_button_pressed"]
+[connection signal="pressed" from="EndDialogueBox/Dialogue1/EndButton" to="EndDialogueBox" method="_on_end_button_pressed"]
+[connection signal="pressed" from="EndDialogueBox/Dialogue2/EndButton2" to="EndDialogueBox" method="_on_end_button_2_pressed"]
