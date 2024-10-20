@@ -1,9 +1,10 @@
-[gd_scene load_steps=48 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=52 format=3 uid="uid://cylce3ac7an7f"]
 
-[ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://kenney_prototype-textures/pngs/texture_wall.png" id="1_qqhmi"]
-[ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="2_b5gw6"]
+[ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://textures/kenney_prototype_textures/pngs/texture_wall.png" id="1_qqhmi"]
+[ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://textures/kenney_prototype_textures/Vector/texture_01.svg" id="2_b5gw6"]
 [ext_resource type="PackedScene" uid="uid://bf4xgew11g0y6" path="res://prefabs/controllable.tscn" id="3_w7180"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="4_x7ld1"]
+[ext_resource type="AudioStream" uid="uid://d3sll8ch5okba" path="res://audio/haunting.mp3" id="5_nfv0p"]
 [ext_resource type="Script" path="res://scripts/rotate_with_mouse.gd" id="5_vafdx"]
 [ext_resource type="Script" path="res://scripts/controllable_detection.gd" id="6_7vgxu"]
 [ext_resource type="Material" uid="uid://6jxrjutahw72" path="res://materials/arrow_color.tres" id="7_bjlbf"]
@@ -15,18 +16,21 @@
 [ext_resource type="Script" path="res://scripts/move_with_player.gd" id="13_gp0yx"]
 [ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://godot_state_charts_examples/new_theme.tres" id="14_obel2"]
 [ext_resource type="Script" path="res://scripts/control_tooltip.gd" id="15_b5hgk"]
-[ext_resource type="Texture2D" uid="uid://thjf3n888jni" path="res://textures_keyboard_controls/mouse_right.svg" id="16_32xm0"]
-[ext_resource type="Texture2D" uid="uid://buyw8cncaolac" path="res://textures_keyboard_controls/keyboard_escape.svg" id="16_87h87"]
-[ext_resource type="Texture2D" uid="uid://j7s00sh2y6r4" path="res://textures_keyboard_controls/keyboard_f.svg" id="17_v1ret"]
-[ext_resource type="Texture2D" uid="uid://bd8ta4wtwm3wr" path="res://textures_keyboard_controls/mouse_left.svg" id="18_qqavu"]
+[ext_resource type="Texture2D" uid="uid://thjf3n888jni" path="res://textures/textures_keyboard_controls/mouse_right.svg" id="16_32xm0"]
+[ext_resource type="Texture2D" uid="uid://buyw8cncaolac" path="res://textures/textures_keyboard_controls/keyboard_escape.svg" id="16_87h87"]
+[ext_resource type="Texture2D" uid="uid://j7s00sh2y6r4" path="res://textures/textures_keyboard_controls/keyboard_f.svg" id="17_v1ret"]
+[ext_resource type="Texture2D" uid="uid://bd8ta4wtwm3wr" path="res://textures/textures_keyboard_controls/mouse_left.svg" id="18_qqavu"]
 [ext_resource type="Script" path="res://scripts/pressure_plate.gd" id="19_5ut6p"]
 [ext_resource type="Material" uid="uid://0v46os1n31bx" path="res://materials/pressure_plate_material_pressed.tres" id="20_kla3w"]
 [ext_resource type="Material" uid="uid://bi43a1i0y5ylb" path="res://materials/pressure_plate_material_desactivated.tres" id="21_v751d"]
 [ext_resource type="Material" uid="uid://ci4bmfeh301bt" path="res://materials/pressure_plate_material_normal_1.tres" id="22_awpnw"]
 [ext_resource type="Material" uid="uid://hyvreme4ba37" path="res://materials/pressure_plate_material_normal_2.tres" id="23_frams"]
+[ext_resource type="AudioStream" uid="uid://ceu7idn7isrv0" path="res://audio/switch_sfx.mp3" id="23_taryn"]
+[ext_resource type="AudioStream" uid="uid://b0fsboetnpcr1" path="res://audio/power_down.mp3" id="24_2xioo"]
 [ext_resource type="Script" path="res://scripts/door.gd" id="24_gv5rw"]
 [ext_resource type="Material" uid="uid://c77sbps2wumbt" path="res://materials/door_open_material.tres" id="25_aci1a"]
 [ext_resource type="Material" uid="uid://sp0ojd44sa8w" path="res://materials/door_closed_material.tres" id="26_grx74"]
+[ext_resource type="AudioStream" uid="uid://cnqq80accxj2e" path="res://audio/unlock.mp3" id="30_85umy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcvr3"]
 albedo_color = Color(0.28, 0.128053, 0.0336, 1)
@@ -168,6 +172,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
 collision_layer = 8
 script = ExtResource("4_x7ld1")
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.629, -0.5, 2.545)
+stream = ExtResource("5_nfv0p")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("CapsuleMesh_v4icb")
 skeleton = NodePath("")
@@ -272,6 +280,10 @@ grow_horizontal = 1
 enabled = false
 initial_node_to_watch = NodePath("../Player/StateChart")
 
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 312.0
 offset_bottom = 64.0
@@ -345,6 +357,11 @@ collision_mask = 10
 script = ExtResource("19_5ut6p")
 pressed_material = ExtResource("20_kla3w")
 deactivated_material = ExtResource("21_v751d")
+entered_sfx = ExtResource("23_taryn")
+exited_sfx = ExtResource("24_2xioo")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="PlayerPressurePlate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.495, -0.5, 2.545)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerPressurePlate"]
 shape = SubResource("BoxShape3D_l5k13")
@@ -359,6 +376,11 @@ collision_mask = 10
 script = ExtResource("19_5ut6p")
 pressed_material = ExtResource("20_kla3w")
 deactivated_material = ExtResource("21_v751d")
+entered_sfx = ExtResource("23_taryn")
+exited_sfx = ExtResource("24_2xioo")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="ControllablePressurePlate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.629, -0.5, 2.545)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ControllablePressurePlate"]
 shape = SubResource("BoxShape3D_l5k13")
@@ -371,6 +393,10 @@ material = ExtResource("23_frams")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.3082)
 script = ExtResource("24_gv5rw")
 open_material = ExtResource("25_aci1a")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.629, -0.5, 2.545)
+stream = ExtResource("30_85umy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door"]
 shape = SubResource("BoxShape3D_v384s")

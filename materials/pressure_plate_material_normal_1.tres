@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ci4bmfeh301bt"]
 
-[ext_resource type="Texture2D" uid="uid://c5dgltiipef82" path="res://kenney_prototype-textures/pngs/texture_checkered.png" id="1_uf7ke"]
+[ext_resource type="Texture2D" uid="uid://c5dgltiipef82" path="res://textures/kenney_prototype_textures/pngs/texture_checkered.png" id="1_uf7ke"]
 
 [resource]
 albedo_color = Color(0, 0.866667, 1, 1)

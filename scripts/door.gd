@@ -7,6 +7,7 @@ signal unlocked
 var normal_material: Material
 
 @onready var csg_box_3d: CSGBox3D = $CollisionShape3D/CSGBox3D2
+@onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var lock_1: bool = false
 var lock_2: bool = false
@@ -33,5 +34,6 @@ func check_locks():
 		locked = ! (lock_1 && lock_2)
 		if (!locked):
 			csg_box_3d.material = open_material
+			audio_stream_player_3d.play()
 			unlocked.emit()
 	
