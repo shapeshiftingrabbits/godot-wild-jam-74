@@ -273,9 +273,6 @@ to = NodePath("../../HauntingState")
 event = &"action_confirm"
 delay_in_seconds = "0.0"
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-size = Vector3(0.2, 0.2, 0.2)
-
 [node name="StateChartDebugger" parent="." instance=ExtResource("12_kqamk")]
 visible = false
 custom_minimum_size = Vector2(300, 0)

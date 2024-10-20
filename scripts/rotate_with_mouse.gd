@@ -1,10 +1,11 @@
 extends Node3D
 
+signal moved(position: Vector3)
+
 @onready var camera_3d: Camera3D = $"../../Camera3D"
 
 @onready var character_body_3d: CharacterBody3D = $".."
 
-@onready var csg_box_3d: CSGBox3D = $"../../CSGBox3D"
 @onready var player: Player = $".."
 
 
@@ -28,7 +29,7 @@ func test_collision_with_query(delta: float):
 	query.collision_mask = 0x004
 	var result = space_state.intersect_ray(query)
 	if result:
-		csg_box_3d.position = result.position
+		moved.emit(result.position)
 		looking_position.x = result.position.x
 		looking_position.z = result.position.z
 		look_at_from_position(player.position,looking_position)

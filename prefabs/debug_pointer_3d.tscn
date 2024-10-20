@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dh18sch4j7wig"]
+
+[ext_resource type="Script" path="res://scripts/set_3d_position.gd" id="1_yytcp"]
+
+[node name="DebugPointer3D" type="CSGBox3D"]
+size = Vector3(0.2, 0.2, 0.2)
+script = ExtResource("1_yytcp")
