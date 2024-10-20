@@ -538,7 +538,6 @@ unique_name_in_owner = true
 size = Vector3(0.3, 0.3, 0.3)
 
 [node name="DialogueBox" type="PanelContainer" parent="."]
-visible = false
 anchors_preset = -1
 anchor_left = 0.2
 anchor_top = 0.6
@@ -549,26 +548,28 @@ grow_vertical = 0
 script = ExtResource("35_gwsul")
 
 [node name="Dialogue1" type="VBoxContainer" parent="DialogueBox"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="DialogueBox/Dialogue1"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 26
 text = "You"
 
 [node name="Label2" type="Label" parent="DialogueBox/Dialogue1"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "Where am I?"
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = ".... Hmmmm.... Where am I?"
 
 [node name="SkipButton" type="Button" parent="DialogueBox/Dialogue1"]
 layout_mode = 2
-text = "Oh, A Puzzle! Let's go!"
+theme_override_font_sizes/font_size = 24
+text = "Hey, a puzzle! Let's go!"
 
 [node name="MoreButton" type="Button" parent="DialogueBox/Dialogue1"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "I wish someone could tell me more..."
 
 [node name="Dialogue2" type="VBoxContainer" parent="DialogueBox"]
@@ -578,38 +579,46 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="DialogueBox/Dialogue2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 26
 text = "Ghost"
 
 [node name="Label2" type="Label" parent="DialogueBox/Dialogue2"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "You bought this retro game from a misterious store. I died while trying to finish this game, so now I am haunting it!"
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "Hey look at me, the cube shaped ghost at you side! I'll get you up to speed.
+I died trying to finish this game, I have been stuck in this level ever since... And now you are stuck with me..."
 autowrap_mode = 2
 
 [node name="OkButton" type="Button" parent="DialogueBox/Dialogue2"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Is there any way out ?!"
 
 [node name="Dialogue3" type="VBoxContainer" parent="DialogueBox"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="DialogueBox/Dialogue3"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 26
 text = "Ghost"
 
 [node name="Label2" type="Label" parent="DialogueBox/Dialogue3"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "Finish this level, and I will be free! But it is veeeeerrrrryyy difficult! Dare I say impossible !"
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_font_sizes/font_size = 24
+text = "Finish this level, I will be free, and so will you! 
+But it is veeeeerrrrryyy difficult! Dare I say impossible !"
 autowrap_mode = 2
 
 [node name="GoButton" type="Button" parent="DialogueBox/Dialogue3"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Let's go! "
 
 [node name="EndDialogueBox" type="PanelContainer" parent="."]
@@ -630,19 +639,21 @@ theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="EndDialogueBox/Dialogue1"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 19
+theme_override_font_sizes/font_size = 26
 text = "Ghost"
 
 [node name="Label2" type="Label" parent="EndDialogueBox/Dialogue1"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
 text = "Oh my glob! You finished the level!
 It was not so hard after all! Oh well! "
 autowrap_mode = 2
 
 [node name="EndButton" type="Button" parent="EndDialogueBox/Dialogue1"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "ooo....ooook... At least I'm free now..."
 
 [node name="Dialogue2" type="VBoxContainer" parent="EndDialogueBox"]
@@ -652,14 +663,16 @@ theme_override_constants/separation = 12
 [node name="Label2" type="Label" parent="EndDialogueBox/Dialogue2"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-text = "You have beat the game! Which was very hard....
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
+text = "You have beat the game! Yay...
 You are free!
 Thank you for playing !"
 autowrap_mode = 2
 
 [node name="EndButton2" type="Button" parent="EndDialogueBox/Dialogue2"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Sure...."
 
 [connection signal="haunting" from="Player" to="Ghost" method="_on_player_haunting"]
