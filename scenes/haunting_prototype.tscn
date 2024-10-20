@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=56 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://textures/kenney_prototype_textures/pngs/texture_wall.png" id="1_qqhmi"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://textures/kenney_prototype_textures/Vector/texture_01.svg" id="2_b5gw6"]
@@ -33,6 +33,7 @@
 [ext_resource type="AudioStream" uid="uid://cnqq80accxj2e" path="res://audio/unlock.mp3" id="30_85umy"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="32_0ytfw"]
 [ext_resource type="Texture2D" uid="uid://joi7cqprkevr" path="res://textures/textures_keyboard_controls/keyboard_1.svg" id="32_8422h"]
+[ext_resource type="Script" path="res://scripts/ghost.gd" id="34_hm22k"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fcvr3"]
 albedo_color = Color(0.28, 0.128053, 0.0336, 1)
@@ -178,10 +179,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12402, 0)
 collision_layer = 8
 script = ExtResource("4_x7ld1")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.629, -0.5, 2.545)
-stream = ExtResource("5_nfv0p")
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("CapsuleMesh_v4icb")
 skeleton = NodePath("")
@@ -190,6 +187,7 @@ skeleton = NodePath("")
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Player"]
+visible = false
 material = SubResource("StandardMaterial3D_cqhaw")
 
 [node name="Pivot" type="Node3D" parent="Player"]
@@ -301,12 +299,11 @@ size_flags_vertical = 0
 theme = ExtResource("14_obel2")
 
 [node name="CancelControlToolTip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = SubResource("Theme_sdmj6")
 script = ExtResource("15_b5hgk")
 icon = ExtResource("16_32xm0")
-title = "Cancel"
+title = "Stop Haunting"
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/CancelControlToolTip"]
 layout_mode = 2
@@ -319,7 +316,6 @@ theme = ExtResource("14_obel2")
 text = "CancelCancelCancelCancel"
 
 [node name="TargetModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 theme = ExtResource("14_obel2")
@@ -338,7 +334,6 @@ theme = ExtResource("14_obel2")
 text = "Cancel"
 
 [node name="HauntingModeControlTooltip" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme = ExtResource("14_obel2")
 script = ExtResource("15_b5hgk")
@@ -485,6 +480,56 @@ to = NodePath("../../GameState")
 event = &"game_pressed"
 delay_in_seconds = "0.0"
 
+[node name="GhostStateChartDebugger" parent="." instance=ExtResource("12_kqamk")]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 9
+anchor_right = 0.0
+offset_right = 300.0
+grow_horizontal = 1
+enabled = false
+initial_node_to_watch = NodePath("../Ghost/StateChart")
+
+[node name="Ghost" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1.5, 0.2)
+script = ExtResource("34_hm22k")
+follow_target = NodePath("../Player")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Ghost"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.63982, -1.08624, 2.545)
+stream = ExtResource("5_nfv0p")
+
+[node name="StateChart" type="Node" parent="Ghost"]
+script = ExtResource("8_h268f")
+
+[node name="CompoundState" type="Node" parent="Ghost/StateChart"]
+script = ExtResource("9_6dp0f")
+initial_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="Ghost/StateChart/CompoundState"]
+script = ExtResource("10_4h0bi")
+
+[node name="ToMove" type="Node" parent="Ghost/StateChart/CompoundState/IdleState"]
+script = ExtResource("11_bk030")
+to = NodePath("../../MoveState")
+event = &"move"
+delay_in_seconds = "0.0"
+
+[node name="MoveState" type="Node" parent="Ghost/StateChart/CompoundState"]
+script = ExtResource("10_4h0bi")
+
+[node name="ToIdle" type="Node" parent="Ghost/StateChart/CompoundState/MoveState"]
+script = ExtResource("11_bk030")
+to = NodePath("../../IdleState")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="Cube" type="CSGBox3D" parent="Ghost"]
+unique_name_in_owner = true
+size = Vector3(0.3, 0.3, 0.3)
+
+[connection signal="haunting" from="Player" to="Ghost" method="_on_player_haunting"]
+[connection signal="stop_hauting" from="Player" to="Ghost" method="_on_player_stop_hauting"]
 [connection signal="body_entered" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_entered"]
 [connection signal="body_exited" from="Player/Pivot/Area3D" to="Player/Pivot/Area3D" method="_on_body_exited"]
 [connection signal="state_entered" from="Player/StateChart/CompoundState/NormalState" to="Player" method="_on_normal_state_state_entered"]
@@ -525,3 +570,7 @@ delay_in_seconds = "0.0"
 [connection signal="state_entered" from="HUD/StateChart/CompoundState/MenuState" to="HUD/VBoxContainer" method="hide"]
 [connection signal="state_entered" from="HUD/StateChart/CompoundState/MenuState" to="HUD/PanelContainer" method="show"]
 [connection signal="state_input" from="HUD/StateChart/CompoundState/MenuState" to="HUD" method="_on_menu_state_state_input"]
+[connection signal="state_entered" from="Ghost/StateChart/CompoundState/IdleState" to="Ghost" method="_on_idle_state_state_entered"]
+[connection signal="state_processing" from="Ghost/StateChart/CompoundState/IdleState" to="Ghost" method="_on_idle_state_state_processing"]
+[connection signal="state_entered" from="Ghost/StateChart/CompoundState/MoveState" to="Ghost" method="_on_move_state_state_entered"]
+[connection signal="state_exited" from="Ghost/StateChart/CompoundState/MoveState" to="Ghost" method="_on_move_state_state_exited"]
