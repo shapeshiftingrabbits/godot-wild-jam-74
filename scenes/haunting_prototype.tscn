@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=55 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://textures/kenney_prototype_textures/pngs/texture_wall.png" id="1_qqhmi"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://textures/kenney_prototype_textures/Vector/texture_01.svg" id="2_b5gw6"]
@@ -102,6 +102,10 @@ size = Vector3(1, 0.1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v384s"]
 size = Vector3(1, 1, 0.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kdukn"]
+line_spacing = 34.0
+font_size = 32
 
 [node name="Root" type="Node3D"]
 metadata/_edit_vertical_guides_ = [-1927.0]
@@ -435,11 +439,19 @@ size_flags_vertical = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HUD/PanelContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="HUD/PanelContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Menu
 "
+label_settings = SubResource("LabelSettings_kdukn")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="HUD/PanelContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
 
 [node name="ReloadButton" type="Button" parent="HUD/PanelContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
