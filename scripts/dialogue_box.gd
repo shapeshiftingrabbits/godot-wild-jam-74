@@ -8,7 +8,7 @@ extends PanelContainer
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	
+	show()
 	hud.hide()
 	dialogue_1.show()
 	dialogue_2.hide()

@@ -392,6 +392,8 @@ material = ExtResource("23_frams")
 
 [node name="Door" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.3082)
+collision_mask = 8
+monitoring = false
 script = ExtResource("24_gv5rw")
 open_material = ExtResource("25_aci1a")
 
@@ -635,7 +637,8 @@ text = "Ghost"
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Oh my glob! You finished the level! I guess it was not so hard after all! Oopsies! "
+text = "Oh my glob! You finished the level!
+It was not so hard after all! Oh well! "
 autowrap_mode = 2
 
 [node name="EndButton" type="Button" parent="EndDialogueBox/Dialogue1"]
@@ -688,6 +691,8 @@ text = "Sure...."
 [connection signal="actived" from="ControllablePressurePlate" to="Door" method="_on_pressure_plate_2_actived"]
 [connection signal="body_entered" from="ControllablePressurePlate" to="ControllablePressurePlate" method="_on_body_entered"]
 [connection signal="body_exited" from="ControllablePressurePlate" to="ControllablePressurePlate" method="_on_body_exited"]
+[connection signal="body_entered" from="Door" to="Door" method="_on_body_entered"]
+[connection signal="passed" from="Door" to="EndDialogueBox" method="play"]
 [connection signal="unlocked" from="Door" to="PlayerPressurePlate" method="_on_door_unlocked"]
 [connection signal="unlocked" from="Door" to="ControllablePressurePlate" method="_on_door_unlocked"]
 [connection signal="pressed" from="HUD/VBoxContainer/MenuButton" to="HUD" method="_on_menu_button_pressed"]

@@ -2,6 +2,7 @@ extends Area3D
 
 
 signal unlocked
+signal passed
 
 @export var open_material: Material
 var normal_material: Material
@@ -35,5 +36,16 @@ func check_locks():
 		if (!locked):
 			csg_box_3d.material = open_material
 			audio_stream_player_3d.play()
+			await audio_stream_player_3d.finished
+			monitoring = true
 			unlocked.emit()
 	
+
+
+func _on_body_entered(body: Node3D) -> void:
+	print("_on_body_entered")
+	if ! locked:
+		print(body)
+		if body.is_in_group("player"):
+			print("passed")
+			passed.emit()
