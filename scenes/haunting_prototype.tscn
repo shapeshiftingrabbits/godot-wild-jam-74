@@ -303,7 +303,7 @@ layout_mode = 2
 theme = SubResource("Theme_sdmj6")
 script = ExtResource("15_b5hgk")
 icon = ExtResource("16_32xm0")
-title = "Stop Haunting"
+title = "Stop Action"
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/CancelControlToolTip"]
 layout_mode = 2
