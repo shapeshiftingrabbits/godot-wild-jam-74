@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_hfp0o"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_nnef5"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="6_6jmdc"]
-[ext_resource type="PackedScene" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="7_mbufp"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="7_mbufp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4l67q"]
 albedo_color = Color(1, 0, 0.483334, 1)

@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="9_6dp0f"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="10_4h0bi"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="11_bk030"]
-[ext_resource type="PackedScene" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="12_kqamk"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="12_kqamk"]
 [ext_resource type="Script" path="res://scripts/move_with_player.gd" id="13_gp0yx"]
 [ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://godot_state_charts_examples/new_theme.tres" id="14_obel2"]
 [ext_resource type="Script" path="res://scripts/control_tooltip.gd" id="15_b5hgk"]
@@ -417,6 +417,10 @@ size_flags_horizontal = 0
 layout_mode = 2
 text = "Menu"
 icon = ExtResource("16_87h87")
+
+[node name="Label" type="Label" parent="HUD/VBoxContainer"]
+layout_mode = 2
+text = "awsd or arrow keys to move."
 
 [node name="PanelContainer" type="PanelContainer" parent="HUD"]
 layout_mode = 2
