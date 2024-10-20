@@ -96,7 +96,8 @@ func _on_targetting_state_state_input(event: InputEvent) -> void:
 
 
 func _on_haunting_state_state_input(event: InputEvent) -> void:
-	if event.is_action_pressed("cancel"):
+	if event.is_action_pressed("cancel") || event.is_action_pressed("action") :
 		current_haunted_target.set_haunted(false)
 		current_haunted_target = null
 		state_chart.send_event("cancel")
+	

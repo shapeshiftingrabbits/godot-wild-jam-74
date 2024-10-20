@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cylce3ac7an7f"]
+[gd_scene load_steps=48 format=3 uid="uid://cylce3ac7an7f"]
 
 [ext_resource type="Texture2D" uid="uid://ic5qk4rajw6o" path="res://kenney_prototype-textures/pngs/texture_wall.png" id="1_qqhmi"]
 [ext_resource type="Texture2D" uid="uid://ct5obyn7p5b26" path="res://kenney_prototype-textures/Vector/texture_01.svg" id="2_b5gw6"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://scripts/move_with_player.gd" id="13_gp0yx"]
 [ext_resource type="Theme" uid="uid://s2bj74tt0y7f" path="res://godot_state_charts_examples/new_theme.tres" id="14_obel2"]
 [ext_resource type="Script" path="res://scripts/control_tooltip.gd" id="15_b5hgk"]
+[ext_resource type="Texture2D" uid="uid://thjf3n888jni" path="res://textures_keyboard_controls/mouse_right.svg" id="16_32xm0"]
 [ext_resource type="Texture2D" uid="uid://buyw8cncaolac" path="res://textures_keyboard_controls/keyboard_escape.svg" id="16_87h87"]
 [ext_resource type="Texture2D" uid="uid://j7s00sh2y6r4" path="res://textures_keyboard_controls/keyboard_f.svg" id="17_v1ret"]
 [ext_resource type="Texture2D" uid="uid://bd8ta4wtwm3wr" path="res://textures_keyboard_controls/mouse_left.svg" id="18_qqavu"]
@@ -79,13 +80,14 @@ height = 1.0
 points = PackedVector3Array(0.190622, 0.340095, 0.0427398, -0.193135, -0.338923, -0.0310244, -0.177289, -0.351479, -0.0747747, -0.16398, 0.383904, -0.0753819, -0.0600953, 0.32193, 0.188647, 0.11673, -0.369802, 0.146319, 0.0859448, -0.335648, -0.176689, 0.0278977, 0.339474, -0.193446, -0.147558, -0.335783, 0.129782, 0.188647, -0.32193, -0.0600953, 0.0288523, -0.487654, -0.0625052, -0.0891595, -0.321166, -0.176769, -0.191178, 0.30631, 0.0567225, 0.028905, 0.488499, 0.0594362, 0.144493, 0.336035, -0.133056, 0.099397, 0.317427, 0.171555, -0.0457956, -0.339183, 0.190107, -0.116906, 0.317159, -0.160164, -0.0618573, -0.467355, 0.0888369, 0.186824, -0.289876, 0.0708561, 0.0586138, 0.46682, -0.0919081, -0.122093, 0.451968, 0.0435783, 0.119466, -0.454024, 0.0437837, 0.057189, -0.323406, 0.18952, -0.0470766, 0.47042, -0.0926045, -0.190797, 0.291104, -0.0597801, -0.0766135, -0.450316, -0.106639, -0.147558, 0.335785, 0.129783, 0.190107, 0.339183, -0.0457956, -0.0310246, -0.338926, -0.193136, 0.159071, 0.335966, 0.115245, 0.0427392, 0.34009, 0.19062)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cqhaw"]
+transparency = 1
 albedo_color = Color(0, 1, 0.95, 0.403922)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wyyjr"]
 size = Vector3(0.4, 2, 5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xn6at"]
-albedo_color = Color(1, 0, 0.95, 0.403922)
+albedo_color = Color(1, 0, 0.95, 1)
 
 [sub_resource type="Theme" id="Theme_sdmj6"]
 
@@ -174,7 +176,6 @@ skeleton = NodePath("")
 shape = SubResource("ConvexPolygonShape3D_elfxu")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="Player"]
-transparency = 0.8
 material = SubResource("StandardMaterial3D_cqhaw")
 
 [node name="Pivot" type="Node3D" parent="Player"]
@@ -190,7 +191,6 @@ shape = SubResource("BoxShape3D_wyyjr")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Player/Pivot/Area3D"]
 visible = false
-transparency = 0.8
 size = Vector3(0.4, 2, 5)
 material = SubResource("StandardMaterial3D_xn6at")
 
@@ -199,7 +199,6 @@ transform = Transform3D(0.3, 0, 0, 0, 0.96, 0, 0, 0, 0.96, 0, 0, -0.0679903)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="Player/Pivot/DirectionIndicator"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -3.08066)
-transparency = 0.8
 radius = 0.1
 height = 4.0
 material = ExtResource("7_bjlbf")
@@ -290,7 +289,7 @@ theme = ExtResource("14_obel2")
 layout_mode = 2
 theme = SubResource("Theme_sdmj6")
 script = ExtResource("15_b5hgk")
-icon = ExtResource("16_87h87")
+icon = ExtResource("16_32xm0")
 title = "Cancel"
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/CancelControlToolTip"]
